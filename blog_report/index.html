@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TN-GridSense — Jury Report</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config = { theme: { extend: { colors: { dark: '#03050a', panel: 'rgba(10,15,25,0.7)' }, fontFamily: { sans: ['Rajdhani', 'sans-serif'], mono: ['Share Tech Mono', 'monospace'] } } } }</script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+
+<body class="bg-dark text-slate-200 font-sans overflow-x-hidden">
+    <div class="grid-bg"></div>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+
+    <!-- ==================== HERO ==================== -->
+    <header class="relative z-10 min-h-screen flex flex-col items-center justify-center text-center px-6">
+        <div class="glow-box mb-6 animate-pulse-slow"><span
+                class="bg-dark px-5 py-2 text-teal-400 font-bold tracking-[0.3em] uppercase font-mono text-xs border border-teal-500/30 inline-block">Executive
+                Jury Presentation</span></div>
+        <h1
+            class="text-7xl md:text-9xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-teal-300 to-blue-500 uppercase tracking-tighter leading-none mb-4">
+            TN-GridSense</h1>
+        <p class="text-xl md:text-2xl text-slate-400 max-w-3xl mb-4">Distributed <span
+                class="text-cyan-400 font-bold">Smart Pole Telemetry</span> &amp; <span
+                class="text-teal-400 font-bold">Predictive AI</span> Platform for Tamil Nadu</p>
+        <p class="text-sm text-slate-500 mb-12 font-mono">Subhaharini S &middot; Harini K &middot; Akilan K &middot;
+            Keerthika D &middot; Vimal Kumar G</p>
+
+        <!-- KPI Stats -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 w-full max-w-4xl mb-16">
+            <div
+                class="stat-card glass-panel p-5 rounded-xl border-t-2 border-cyan-400 text-center hover:-translate-y-1 transition-transform">
+                <div class="text-cyan-400/60 font-mono text-xs uppercase mb-1">Target Scale</div>
+                <div class="text-4xl font-bold text-white"><span data-count="100000" data-suffix="+"
+                        class="tabular-nums">0</span></div>
+                <div class="text-xs text-slate-500 mt-1">Poles Monitored</div>
+            </div>
+            <div
+                class="stat-card glass-panel p-5 rounded-xl border-t-2 border-teal-400 text-center hover:-translate-y-1 transition-transform">
+                <div class="text-teal-400/60 font-mono text-xs uppercase mb-1">Telemetry</div>
+                <div class="text-4xl font-bold text-white"><span data-count="5" data-suffix="s">0</span></div>
+                <div class="text-xs text-slate-500 mt-1">Refresh Interval</div>
+            </div>
+            <div
+                class="stat-card glass-panel p-5 rounded-xl border-t-2 border-purple-400 text-center hover:-translate-y-1 transition-transform">
+                <div class="text-purple-400/60 font-mono text-xs uppercase mb-1">AI Engine</div>
+                <div class="text-4xl font-bold text-white">TTF</div>
+                <div class="text-xs text-slate-500 mt-1">Predicted Before Failure</div>
+            </div>
+            <div
+                class="stat-card glass-panel p-5 rounded-xl border-t-2 border-emerald-400 text-center hover:-translate-y-1 transition-transform">
+                <div class="text-emerald-400/60 font-mono text-xs uppercase mb-1">Hardware BOM</div>
+                <div class="text-4xl font-bold text-white"><span data-prefix="&#8377;" data-count="1200">0</span></div>
+                <div class="text-xs text-slate-500 mt-1">Per Edge Node</div>
+            </div>
+        </div>
+        <a href="#problem"
+            class="bounce-arrow text-cyan-400 border border-cyan-500/30 rounded-full p-3 bg-panel hover:bg-cyan-900/30 transition-colors"><svg
+                class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+            </svg></a>
+    </header>
+
+    <!-- ==================== PROBLEM vs SOLUTION ==================== -->
+    <section id="problem" class="max-w-6xl mx-auto px-6 py-24 relative z-10">
+        <div class="flex items-center justify-center mb-14">
+            <div class="h-px w-16 bg-gradient-to-r from-transparent to-cyan-500"></div>
+            <h2
+                class="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-teal-300 mx-4 font-mono uppercase tracking-widest">
+                The Catalyst</h2>
+            <div class="h-px w-16 bg-gradient-to-l from-transparent to-cyan-500"></div>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 relative">
+            <div
+                class="hidden lg:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-14 h-14 rounded-full bg-dark border-2 border-cyan-500/50 items-center justify-center z-20 font-bold text-cyan-400 font-mono text-sm shadow-[0_0_20px_rgba(0,243,255,0.3)]">
+                VS</div>
+            <!-- Problems -->
+            <div class="space-y-4">
+                <div
+                    class="reveal-item bg-red-950/20 border border-red-500/20 p-5 rounded-xl hover:border-red-500/40 transition-colors flex items-start gap-4">
+                    <div class="p-2.5 bg-red-900/40 text-red-400 rounded-lg shrink-0"><svg class="w-5 h-5" fill="none"
+                            stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
+                        </svg></div>
+                    <div>
+                        <h3 class="text-lg font-bold text-red-300">Blind Below Feeders</h3>
+                        <p class="text-slate-400 text-sm">Monitoring stops at the substation level. Individual pole
+                            conditions remain a complete black box.</p>
+                    </div>
+                </div>
+                <div
+                    class="reveal-item bg-red-950/20 border border-red-500/20 p-5 rounded-xl hover:border-red-500/40 transition-colors flex items-start gap-4">
+                    <div class="p-2.5 bg-red-900/40 text-red-400 rounded-lg shrink-0"><svg class="w-5 h-5" fill="none"
+                            stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg></div>
+                    <div>
+                        <h3 class="text-lg font-bold text-red-300">Reactive Nightmares</h3>
+                        <p class="text-slate-400 text-sm">Crews dispatched blindly after public complaints. Night-time
+                            restrictions add hours to resolution.</p>
+                    </div>
+                </div>
+                <div
+                    class="reveal-item bg-red-950/20 border border-red-500/20 p-5 rounded-xl hover:border-red-500/40 transition-colors flex items-start gap-4">
+                    <div class="p-2.5 bg-red-900/40 text-red-400 rounded-lg shrink-0"><svg class="w-5 h-5" fill="none"
+                            stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6" />
+                        </svg></div>
+                    <div>
+                        <h3 class="text-lg font-bold text-red-300">20% AT&amp;C Losses</h3>
+                        <p class="text-slate-400 text-sm">Massive power lost to theft &amp; inefficiency. Discovered
+                            only months later via audits. Hundreds of crores wasted.</p>
+                    </div>
+                </div>
+                <div
+                    class="reveal-item bg-red-950/20 border border-red-500/20 p-5 rounded-xl hover:border-red-500/40 transition-colors flex items-start gap-4">
+                    <div class="p-2.5 bg-red-900/40 text-red-400 rounded-lg shrink-0"><svg class="w-5 h-5" fill="none"
+                            stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
+                        </svg></div>
+                    <div>
+                        <h3 class="text-lg font-bold text-red-300">&#8377;3-8L Transformer Burns</h3>
+                        <p class="text-slate-400 text-sm">Thousands of transformer failures per year, each costing
+                            lakhs. No early warning system exists.</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Solutions -->
+            <div class="space-y-4">
+                <div
+                    class="reveal-item bg-teal-950/20 border border-teal-500/30 p-5 rounded-xl hover:border-teal-400/60 transition-colors flex items-start gap-4 shadow-[0_0_10px_rgba(0,255,170,0.03)] hover:shadow-[0_0_20px_rgba(0,255,170,0.1)]">
+                    <div
+                        class="p-2.5 bg-teal-900/40 text-teal-400 rounded-lg shrink-0 shadow-[0_0_8px_rgba(0,255,170,0.2)]">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg></div>
+                    <div>
+                        <h3 class="text-lg font-bold text-teal-300">Pole-Level Intelligence</h3>
+                        <p class="text-slate-300 text-sm">IoT Edge nodes on every pole capturing Voltage, Current, and
+                            Temperature every 5 seconds.</p>
+                    </div>
+                </div>
+                <div
+                    class="reveal-item bg-teal-950/20 border border-teal-500/30 p-5 rounded-xl hover:border-teal-400/60 transition-colors flex items-start gap-4 shadow-[0_0_10px_rgba(0,255,170,0.03)] hover:shadow-[0_0_20px_rgba(0,255,170,0.1)]">
+                    <div
+                        class="p-2.5 bg-teal-900/40 text-teal-400 rounded-lg shrink-0 shadow-[0_0_8px_rgba(0,255,170,0.2)]">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M13 10V3L4 14h7v7l9-11h-7z" />
+                        </svg></div>
+                    <div>
+                        <h3 class="text-lg font-bold text-teal-300">Predictive AI Maintenance</h3>
+                        <p class="text-slate-300 text-sm">Weibull survival models forecast degradation. Auto-generates
+                            work orders before failure occurs.</p>
+                    </div>
+                </div>
+                <div
+                    class="reveal-item bg-teal-950/20 border border-teal-500/30 p-5 rounded-xl hover:border-teal-400/60 transition-colors flex items-start gap-4 shadow-[0_0_10px_rgba(0,255,170,0.03)] hover:shadow-[0_0_20px_rgba(0,255,170,0.1)]">
+                    <div
+                        class="p-2.5 bg-teal-900/40 text-teal-400 rounded-lg shrink-0 shadow-[0_0_8px_rgba(0,255,170,0.2)]">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                        </svg></div>
+                    <div>
+                        <h3 class="text-lg font-bold text-teal-300">Automated Revenue Recovery</h3>
+                        <p class="text-slate-300 text-sm">Differential analysis (Feeder Input vs Pole Sum) pinpoints
+                            theft zones geographically in real-time.</p>
+                    </div>
+                </div>
+                <div
+                    class="reveal-item bg-teal-950/20 border border-teal-500/30 p-5 rounded-xl hover:border-teal-400/60 transition-colors flex items-start gap-4 shadow-[0_0_10px_rgba(0,255,170,0.03)] hover:shadow-[0_0_20px_rgba(0,255,170,0.1)]">
+                    <div
+                        class="p-2.5 bg-teal-900/40 text-teal-400 rounded-lg shrink-0 shadow-[0_0_8px_rgba(0,255,170,0.2)]">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                        </svg></div>
+                    <div>
+                        <h3 class="text-lg font-bold text-teal-300">Edge-Based Auto Protection</h3>
+                        <p class="text-slate-300 text-sm">Solid-State Relay trips locally on critical faults &mdash; no
+                            cloud dependency needed for safety.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== 5-LAYER ARCHITECTURE ==================== -->
+    <section id="architecture" class="w-full border-y border-cyan-900/40 py-24 relative z-10 bg-dark/80">
+        <div class="max-w-5xl mx-auto px-6">
+            <div class="text-center mb-14"><span
+                    class="px-3 py-1 bg-cyan-900/40 border border-cyan-500/20 rounded text-cyan-300 font-mono text-xs mb-3 inline-block">SYSTEM
+                    TOPOLOGY</span>
+                <h2
+                    class="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-indigo-400 uppercase tracking-widest">
+                    5-Layer Architecture</h2>
+            </div>
+            <div class="flex flex-col items-center max-w-3xl mx-auto space-y-6 relative">
+                <!-- Vertical data flow line -->
+                <div
+                    class="absolute left-8 top-0 bottom-0 w-px bg-gradient-to-b from-cyan-500/20 via-teal-500/30 to-blue-500/10 hidden md:block">
+                    <div class="w-2.5 h-2.5 bg-cyan-400 rounded-full blur-[1px] absolute -left-[4px] animate-data-flow drop-shadow-[0_0_6px_rgba(0,243,255,1)]"
+                        style="animation-delay:0s"></div>
+                    <div class="w-2.5 h-2.5 bg-teal-400 rounded-full blur-[1px] absolute -left-[4px] animate-data-flow drop-shadow-[0_0_6px_rgba(0,255,170,1)]"
+                        style="animation-delay:1.5s"></div>
+                </div>
+                <!-- L1 -->
+                <div
+                    class="reveal-item layer-card w-full bg-panel border-l-4 border-l-cyan-400 border border-cyan-900/30 p-5 rounded-lg shadow-[0_4px_12px_rgba(0,0,0,0.5)]">
+                    <div class="flex items-center justify-between mb-3">
+                        <div class="flex items-center gap-3">
+                            <div class="p-2 bg-cyan-900/50 rounded border border-cyan-500/20"><svg
+                                    class="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
+                                </svg></div>
+                            <h3 class="text-xl font-bold text-cyan-300">Layer 1: Edge Hardware</h3>
+                        </div><span
+                            class="bg-cyan-950 text-cyan-400 px-2 py-0.5 rounded text-xs font-mono border border-cyan-800">ESP32</span>
+                    </div>
+                    <div class="grid grid-cols-3 gap-3 text-xs">
+                        <div class="bg-dark/50 p-2 rounded border border-slate-800"><span
+                                class="text-slate-500 block">Sensors</span><span class="text-cyan-100 font-mono">ACS712
+                                / MAX6675</span></div>
+                        <div class="bg-dark/50 p-2 rounded border border-slate-800"><span
+                                class="text-slate-500 block">Protection</span><span
+                                class="text-cyan-100 font-mono">Relay Auto-Trip</span></div>
+                        <div class="bg-dark/50 p-2 rounded border border-slate-800"><span
+                                class="text-slate-500 block">Edge Logic</span><span
+                                class="text-cyan-100 font-mono">Health Score (C++)</span></div>
+                    </div>
+                </div>
+                <!-- L2 -->
+                <div
+                    class="reveal-item layer-card w-full bg-panel border-l-4 border-l-teal-400 border border-teal-900/30 p-5 rounded-lg shadow-[0_4px_12px_rgba(0,0,0,0.5)]">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="p-2 bg-teal-900/50 rounded border border-teal-500/20"><svg
+                                class="w-5 h-5 text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0" />
+                            </svg></div>
+                        <h3 class="text-xl font-bold text-teal-300">Layer 2: Hybrid Communication</h3>
+                    </div>
+                    <div class="flex gap-3">
+                        <div class="flex-1 bg-dark/50 p-3 rounded border border-slate-800 flex items-center gap-2">
+                            <div class="w-2 h-2 bg-teal-400 rounded-full animate-ping"></div>
+                            <div><span class="text-teal-400 font-bold text-sm block">Urban</span><span
+                                    class="text-slate-400 text-xs">WiFi / 4G HTTP POST</span></div>
+                        </div>
+                        <div class="flex-1 bg-dark/50 p-3 rounded border border-slate-800 flex items-center gap-2">
+                            <div class="w-2 h-2 bg-green-400 rounded-full animate-ping"></div>
+                            <div><span class="text-green-400 font-bold text-sm block">Rural</span><span
+                                    class="text-slate-400 text-xs">LoRa 433MHz Gateway</span></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- L3 -->
+                <div
+                    class="reveal-item layer-card w-full bg-panel border-l-4 border-l-blue-400 border border-blue-900/30 p-5 rounded-lg shadow-[0_4px_12px_rgba(0,0,0,0.5)]">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="p-2 bg-blue-900/50 rounded border border-blue-500/20"><svg
+                                class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01" />
+                            </svg></div>
+                        <h3 class="text-xl font-bold text-blue-300">Layer 3: Backend Engine</h3>
+                    </div>
+                    <div class="grid grid-cols-2 gap-3 text-xs">
+                        <div class="bg-dark/50 p-2 rounded border border-slate-800 flex justify-between"><span
+                                class="text-slate-400">Runtime</span><span class="text-blue-300 font-mono">Bun.js +
+                                Elysia</span></div>
+                        <div class="bg-dark/50 p-2 rounded border border-slate-800 flex justify-between"><span
+                                class="text-slate-400">Storage</span><span class="text-blue-300 font-mono">SQLite /
+                                TimescaleDB</span></div>
+                        <div class="bg-dark/50 p-2 rounded border border-slate-800 flex justify-between"><span
+                                class="text-slate-400">Aggregation</span><span class="text-blue-300 font-mono">Feeder
+                                &amp; District</span></div>
+                        <div class="bg-dark/50 p-2 rounded border border-slate-800 flex justify-between"><span
+                                class="text-slate-400">Real-Time</span><span class="text-blue-300 font-mono">WebSocket
+                                Pub/Sub</span></div>
+                    </div>
+                </div>
+                <!-- L4 -->
+                <div
+                    class="reveal-item layer-card w-full bg-panel border-l-4 border-l-purple-400 border border-purple-900/30 p-5 rounded-lg shadow-[0_4px_12px_rgba(0,0,0,0.5)]">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="p-2 bg-purple-900/50 rounded border border-purple-500/20"><svg
+                                class="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M13 10V3L4 14h7v7l9-11h-7z" />
+                            </svg></div>
+                        <h3 class="text-xl font-bold text-purple-300">Layer 4: AI &amp; Analytics</h3>
+                    </div>
+                    <div class="flex flex-wrap gap-2 text-xs"><span
+                            class="px-2 py-1 bg-purple-900/30 text-purple-300 rounded border border-purple-800/50">Predictive
+                            TTF</span><span
+                            class="px-2 py-1 bg-purple-900/30 text-purple-300 rounded border border-purple-800/50">Weibull
+                            Curves</span><span
+                            class="px-2 py-1 bg-purple-900/30 text-purple-300 rounded border border-purple-800/50">Grid
+                            Copilot</span><span
+                            class="px-2 py-1 bg-purple-900/30 text-purple-300 rounded border border-purple-800/50">NL2SQL
+                            Queries</span><span
+                            class="px-2 py-1 bg-purple-900/30 text-purple-300 rounded border border-purple-800/50">Auto-Dispatch</span><span
+                            class="px-2 py-1 bg-purple-900/30 text-purple-300 rounded border border-purple-800/50">AT&amp;C
+                            Loss Detection</span></div>
+                </div>
+                <!-- L5 -->
+                <div
+                    class="reveal-item layer-card w-full bg-panel border-l-4 border-l-pink-400 border border-pink-900/30 p-5 rounded-lg shadow-[0_4px_12px_rgba(0,0,0,0.5)]">
+                    <div class="flex items-center justify-between mb-3">
+                        <div class="flex items-center gap-3">
+                            <div class="p-2 bg-pink-900/50 rounded border border-pink-500/20"><svg
+                                    class="w-5 h-5 text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                </svg></div>
+                            <h3 class="text-xl font-bold text-pink-300">Layer 5: Dashboard</h3>
+                        </div><span
+                            class="bg-pink-950 text-pink-400 px-2 py-0.5 rounded text-xs font-mono border border-pink-800">NEXT.JS</span>
+                    </div>
+                    <div class="flex flex-wrap gap-2 text-xs"><span
+                            class="px-2 py-1 bg-dark text-slate-300 border border-slate-700 rounded-full">TN State
+                            Map</span><span
+                            class="px-2 py-1 bg-dark text-slate-300 border border-slate-700 rounded-full">District
+                            Drill-down</span><span
+                            class="px-2 py-1 bg-dark text-slate-300 border border-slate-700 rounded-full">Pole
+                            Inspector</span><span
+                            class="px-2 py-1 bg-dark text-slate-300 border border-slate-700 rounded-full">Fault
+                            Feed</span><span
+                            class="px-2 py-1 bg-dark text-slate-300 border border-slate-700 rounded-full">APFC
+                            Monitor</span><span
+                            class="px-2 py-1 bg-dark text-pink-300 border border-pink-700/40 rounded-full font-bold glow-box">Grid
+                            Copilot</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== TECH STACK ==================== -->
+    <section id="stack" class="max-w-6xl mx-auto px-6 py-24 relative z-10">
+        <h2
+            class="text-3xl font-bold text-center text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-300 mb-14 uppercase tracking-wider font-mono">
+            Execution Framework</h2>
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-5">
+            <div
+                class="reveal-item glass-panel p-5 rounded-xl border border-slate-800 hover:border-blue-500/40 transition-all hover:-translate-y-2 text-center group">
+                <div
+                    class="w-14 h-14 mx-auto bg-blue-900/30 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-[0_0_12px_rgba(59,130,246,0.2)]">
+                    <svg class="w-7 h-7 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                    </svg></div>
+                <h3 class="text-lg font-bold text-white mb-1">C++ Firmware</h3>
+                <p class="text-slate-400 text-xs">838-line ESP32 firmware. 10 fault thresholds. Sub-10ms relay response.
+                </p>
+            </div>
+            <div
+                class="reveal-item glass-panel p-5 rounded-xl border border-slate-800 hover:border-yellow-500/40 transition-all hover:-translate-y-2 text-center group">
+                <div
+                    class="w-14 h-14 mx-auto bg-yellow-900/30 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-[0_0_12px_rgba(234,179,8,0.2)]">
+                    <svg class="w-7 h-7 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg></div>
+                <h3 class="text-lg font-bold text-white mb-1">Bun + Elysia</h3>
+                <p class="text-slate-400 text-xs">Ultra-fast TypeScript backend. 1,200+ concurrent telemetry packets.
+                </p>
+            </div>
+            <div
+                class="reveal-item glass-panel p-5 rounded-xl border border-slate-800 hover:border-purple-500/40 transition-all hover:-translate-y-2 text-center group">
+                <div
+                    class="w-14 h-14 mx-auto bg-purple-900/30 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-[0_0_12px_rgba(168,85,247,0.2)]">
+                    <svg class="w-7 h-7 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4" />
+                    </svg></div>
+                <h3 class="text-lg font-bold text-white mb-1">Time-Series DB</h3>
+                <p class="text-slate-400 text-xs">SQLite embedded persistence. Path to distributed TimescaleDB cluster.
+                </p>
+            </div>
+            <div
+                class="reveal-item glass-panel p-5 rounded-xl border border-slate-800 hover:border-teal-500/40 transition-all hover:-translate-y-2 text-center group">
+                <div
+                    class="w-14 h-14 mx-auto bg-teal-900/30 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-[0_0_12px_rgba(20,184,166,0.2)]">
+                    <svg class="w-7 h-7 text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg></div>
+                <h3 class="text-lg font-bold text-white mb-1">Next.js Dashboard</h3>
+                <p class="text-slate-400 text-xs">React 18. Leaflet mapping of 38 districts. Real-time WebSocket UI.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== IMPACT & ROI ==================== -->
+    <section id="impact" class="max-w-5xl mx-auto px-6 pb-24 relative z-10">
+        <h2
+            class="text-3xl font-bold text-center text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-green-300 mb-12 uppercase tracking-wider font-mono">
+            Impact &amp; Tender Viability</h2>
+        <div class="reveal-item glass-panel rounded-2xl border border-emerald-900/40 overflow-hidden">
+            <div
+                class="border-b border-emerald-900/40 bg-emerald-950/20 p-6 flex flex-col md:flex-row items-center justify-between gap-4">
+                <div>
+                    <h3 class="text-xl font-bold text-emerald-300">Payback Period: <span
+                            class="bg-emerald-900/50 px-3 py-1 rounded text-emerald-100 ml-1">2.4 Years</span></h3>
+                    <p class="text-slate-400 text-sm mt-1">Self-funded through recovered theft and prevented asset
+                        destruction.</p>
+                </div>
+                <div class="flex gap-8">
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-green-400">20%</div>
+                        <div class="text-xs text-slate-500 uppercase tracking-wider">AT&amp;C Gap</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-white">&#8377;1.2K</div>
+                        <div class="text-xs text-slate-500 uppercase tracking-wider">Per-Pole BOM</div>
+                    </div>
+                </div>
+            </div>
+            <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <h4 class="text-base font-bold text-white mb-3 flex items-center gap-2"><svg
+                            class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                        </svg>Revenue Recovery</h4>
+                    <p class="text-slate-400 text-sm mb-3">Differential analysis (Feeder Input - Sum of Pole Outputs)
+                        precisely identifies theft zones. 1% recovery = hundreds of crores annually.</p>
+                    <div class="w-full bg-dark rounded-full h-1.5">
+                        <div class="bg-emerald-500 h-1.5 rounded-full progress-bar-fill" style="width:85%"></div>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-base font-bold text-white mb-3 flex items-center gap-2"><svg
+                            class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                        </svg>Asset Preservation</h4>
+                    <p class="text-slate-400 text-sm mb-3">Thermal runaway detection hours before physical destruction.
+                        1 prevented burnout pays for monitoring 400+ poles.</p>
+                    <div class="w-full bg-dark rounded-full h-1.5">
+                        <div class="bg-teal-500 h-1.5 rounded-full progress-bar-fill" style="width:95%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== COMPETITOR TABLE ==================== -->
+    <section class="max-w-5xl mx-auto px-6 pb-24 relative z-10">
+        <h2
+            class="text-3xl font-bold text-center text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-yellow-300 mb-12 uppercase tracking-wider font-mono">
+            Market Superiority</h2>
+        <div
+            class="reveal-item glass-panel p-0.5 rounded-xl overflow-hidden border border-slate-800 shadow-[0_0_20px_rgba(0,0,0,0.6)]">
+            <div class="bg-dark rounded-lg overflow-x-auto">
+                <table class="w-full text-left text-sm">
+                    <thead>
+                        <tr class="border-b border-slate-800 text-slate-500 font-mono uppercase text-xs tracking-wider">
+                            <th class="py-4 px-5">Capability</th>
+                            <th class="py-4 px-5 bg-red-950/15 text-red-400">Legacy SCADA</th>
+                            <th class="py-4 px-5 bg-teal-900/20 text-teal-300">TN-GridSense</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-800/50">
+                        <tr class="hover:bg-slate-900/40">
+                            <td class="py-3 px-5 text-slate-200 font-medium">Grid Resolution</td>
+                            <td class="py-3 px-5 text-slate-500 bg-red-950/5">Substation &amp; Feeder only</td>
+                            <td class="py-3 px-5 text-teal-300 bg-teal-900/5 font-bold">&#10003; Pole-Level Granularity
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-slate-900/40">
+                            <td class="py-3 px-5 text-slate-200 font-medium">Local Protection</td>
+                            <td class="py-3 px-5 text-slate-500 bg-red-950/5">Centralized SCADA commands</td>
+                            <td class="py-3 px-5 text-teal-300 bg-teal-900/5 font-bold">&#10003; Edge Relay Auto-Trip
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-slate-900/40">
+                            <td class="py-3 px-5 text-slate-200 font-medium">Hardware Platform</td>
+                            <td class="py-3 px-5 text-slate-500 bg-red-950/5">Proprietary ABB/Siemens</td>
+                            <td class="py-3 px-5 text-teal-300 bg-teal-900/5 font-bold">&#10003; Open ESP32
+                                (&#8377;1.2K)</td>
+                        </tr>
+                        <tr class="hover:bg-slate-900/40">
+                            <td class="py-3 px-5 text-slate-200 font-medium">Maintenance</td>
+                            <td class="py-3 px-5 text-slate-500 bg-red-950/5">Post-failure triage</td>
+                            <td class="py-3 px-5 text-teal-300 bg-teal-900/5 font-bold">&#10003; Predictive TTF AI</td>
+                        </tr>
+                        <tr class="hover:bg-slate-900/40">
+                            <td class="py-3 px-5 text-slate-200 font-medium">Data Access</td>
+                            <td class="py-3 px-5 text-slate-500 bg-red-950/5">Dashboard-only analysts</td>
+                            <td class="py-3 px-5 text-teal-300 bg-teal-900/5 font-bold">&#10003; Natural Language
+                                (NL2SQL)</td>
+                        </tr>
+                        <tr class="hover:bg-slate-900/40">
+                            <td class="py-3 px-5 text-slate-200 font-medium">Industrial B2B</td>
+                            <td class="py-3 px-5 text-slate-500 bg-red-950/5">Separate metering</td>
+                            <td class="py-3 px-5 text-teal-300 bg-teal-900/5 font-bold">&#10003; Built-in APFC Monitor
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== TIMELINE ==================== -->
+    <section class="max-w-3xl mx-auto px-6 pb-24 relative z-10">
+        <h2 class="text-3xl font-bold text-center text-white mb-14 font-mono tracking-widest uppercase">Development
+            Timeline</h2>
+        <div class="relative border-l-2 border-cyan-500/25 ml-3 space-y-10 pb-6">
+            <div class="reveal-item relative pl-10 group">
+                <div
+                    class="absolute w-3.5 h-3.5 bg-dark border-2 border-cyan-400 rounded-full -left-[8px] top-1.5 group-hover:scale-150 transition-transform shadow-[0_0_8px_rgba(0,243,255,0.6)]">
+                </div>
+                <h3 class="text-lg font-bold text-cyan-300 font-mono">Aug 2024 &mdash; Conception</h3>
+                <p class="text-slate-400 text-sm mt-1">Identified pole-level visibility gap. Designed the 5-layer
+                    ESP32-to-Cloud architecture.</p>
+            </div>
+            <div class="reveal-item relative pl-10 group">
+                <div
+                    class="absolute w-3.5 h-3.5 bg-dark border-2 border-cyan-400 rounded-full -left-[8px] top-1.5 group-hover:scale-150 transition-transform shadow-[0_0_8px_rgba(0,243,255,0.6)]">
+                </div>
+                <h3 class="text-lg font-bold text-cyan-300 font-mono">Oct 2024 &mdash; Hardware Prototype</h3>
+                <p class="text-slate-400 text-sm mt-1">Built C++ firmware for ESP32. Integrated ACS712, voltage
+                    dividers, automated relay tripping.</p>
+            </div>
+            <div class="reveal-item relative pl-10 group">
+                <div
+                    class="absolute w-3.5 h-3.5 bg-dark border-2 border-teal-400 rounded-full -left-[8px] top-1.5 group-hover:scale-150 transition-transform shadow-[0_0_8px_rgba(0,255,170,0.6)]">
+                </div>
+                <h3 class="text-lg font-bold text-teal-300 font-mono">Jan&ndash;Oct 2025 &mdash; Full Stack</h3>
+                <p class="text-slate-400 text-sm mt-1">Deployed Bun.js backend + Next.js dashboard. WebSocket
+                    broadcasting, B2B APFC tools, 38-district Leaflet maps.</p>
+            </div>
+            <div class="reveal-item relative pl-10 group">
+                <div
+                    class="absolute w-3.5 h-3.5 bg-dark border-2 border-purple-400 rounded-full -left-[8px] top-1.5 group-hover:scale-150 transition-transform shadow-[0_0_8px_rgba(176,38,255,0.6)]">
+                </div>
+                <h3 class="text-lg font-bold text-purple-300 font-mono">Feb&ndash;Mar 2026 &mdash; AI &amp; Phase 1</h3>
+                <p class="text-slate-400 text-sm mt-1">Grid Copilot &amp; NL2SQL. SQLite persistence. 10x simulation
+                    scale. Upgrade Roadmap (Phases 1-5).</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="text-center text-slate-600 font-mono relative z-10 border-t border-slate-800 py-6 bg-dark">
+        <p>TN-GridSense Engineering Initiative &copy; 2026</p>
+        <p class="text-xs mt-1 text-slate-700">Confidential Report &mdash; Do Not Distribute</p>
+    </footer>
+</body>
+
+</html>

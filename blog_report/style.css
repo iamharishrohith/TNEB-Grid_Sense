@@ -1,0 +1,274 @@
+:root {
+    --neon-blue: #00f3ff;
+    --neon-teal: #00ffaa;
+    --neon-purple: #b026ff;
+    --dark-bg: #03050a;
+    --panel-bg: rgba(10, 15, 25, 0.7);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: var(--dark-bg);
+    color: #e2e8f0;
+    font-family: 'Rajdhani', sans-serif;
+    overflow-x: hidden;
+    margin: 0;
+}
+
+.tech-font {
+    font-family: 'Share Tech Mono', monospace;
+}
+
+/* ======================== GRID BACKGROUND ======================== */
+.grid-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-image:
+        linear-gradient(rgba(0, 243, 255, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 243, 255, 0.04) 1px, transparent 1px);
+    background-size: 50px 50px;
+    z-index: 0;
+    animation: gridMove 25s linear infinite;
+}
+
+@keyframes gridMove {
+    0% {
+        background-position: 0 0;
+    }
+
+    100% {
+        background-position: 50px 50px;
+    }
+}
+
+/* ======================== GLASS PANEL ======================== */
+.glass-panel {
+    background: var(--panel-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(0, 243, 255, 0.15);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ======================== GLOW BOX ======================== */
+.glow-box {
+    box-shadow: 0 0 15px rgba(0, 255, 170, 0.15), inset 0 0 15px rgba(0, 255, 170, 0.05);
+}
+
+/* ======================== FLOATING ORBS ======================== */
+.orb {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(100px);
+    z-index: 0;
+    opacity: 0.12;
+    pointer-events: none;
+    animation: orbFloat 15s ease-in-out infinite alternate;
+}
+
+.orb-1 {
+    background: var(--neon-blue);
+    width: 400px;
+    height: 400px;
+    top: -150px;
+    left: -150px;
+}
+
+.orb-2 {
+    background: var(--neon-teal);
+    width: 350px;
+    height: 350px;
+    bottom: 5%;
+    right: -100px;
+    animation-delay: -6s;
+}
+
+.orb-3 {
+    background: var(--neon-purple);
+    width: 300px;
+    height: 300px;
+    top: 35%;
+    left: 15%;
+    animation-delay: -3s;
+}
+
+@keyframes orbFloat {
+    0% {
+        transform: translateY(0) scale(1);
+    }
+
+    100% {
+        transform: translateY(60px) scale(1.15);
+    }
+}
+
+/* ======================== TEXT GLOW ======================== */
+.text-glow {
+    text-shadow: 0 0 20px rgba(0, 243, 255, 0.4), 0 0 40px rgba(0, 243, 255, 0.1);
+}
+
+/* ======================== SCROLL REVEAL ======================== */
+.reveal-item {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.reveal-item.revealed {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ======================== TIMELINE ======================== */
+.timeline-line {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--neon-blue), var(--neon-teal), transparent);
+    transform: translateX(-50%);
+    z-index: 0;
+}
+
+/* ======================== ANIMATED DATA FLOW (Architecture) ======================== */
+@keyframes dataFlowDown {
+    0% {
+        top: 0;
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 1;
+    }
+
+    90% {
+        opacity: 1;
+    }
+
+    100% {
+        top: 100%;
+        opacity: 0;
+    }
+}
+
+.animate-data-flow {
+    animation: dataFlowDown 4.5s linear infinite;
+}
+
+/* ======================== PULSE SLOW ======================== */
+@keyframes pulseSlow {
+
+    0%,
+    100% {
+        opacity: 1;
+        box-shadow: 0 0 15px rgba(0, 255, 170, 0.15);
+    }
+
+    50% {
+        opacity: 0.85;
+        box-shadow: 0 0 25px rgba(0, 255, 170, 0.3);
+    }
+}
+
+.animate-pulse-slow {
+    animation: pulseSlow 3s ease-in-out infinite;
+}
+
+/* ======================== COUNTER ANIMATION ======================== */
+@keyframes countUp {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.stat-card {
+    animation: countUp 0.6s ease-out forwards;
+}
+
+.stat-card:nth-child(2) {
+    animation-delay: 0.15s;
+}
+
+.stat-card:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+.stat-card:nth-child(4) {
+    animation-delay: 0.45s;
+}
+
+/* ======================== SECTION DIVIDER ======================== */
+.section-divider {
+    width: 120px;
+    height: 2px;
+    margin: 0 auto 3rem;
+    background: linear-gradient(90deg, transparent, var(--neon-blue), var(--neon-teal), transparent);
+}
+
+/* ======================== LAYER CARDS (Architecture) ======================== */
+.layer-card {
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.layer-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 25px rgba(0, 243, 255, 0.1);
+}
+
+/* ======================== PROGRESS BAR ANIMATION ======================== */
+@keyframes progressFill {
+    from {
+        width: 0;
+    }
+}
+
+.progress-bar-fill {
+    animation: progressFill 1.5s ease-out forwards;
+}
+
+/* ======================== BOUNCE ARROW ======================== */
+@keyframes bounceArrow {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(8px);
+    }
+}
+
+.bounce-arrow {
+    animation: bounceArrow 2s ease-in-out infinite;
+}
+
+/* ======================== RESPONSIVE ======================== */
+@media (max-width: 768px) {
+    .timeline-line {
+        display: none;
+    }
+
+    .orb {
+        display: none;
+    }
+}

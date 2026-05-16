@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="TN-GridSense: State-Scale Distributed Smart Pole Monitoring & Predictive Grid Optimization Platform for Tamil Nadu's Distribution Grid">
+  <title>TN-GridSense | Smart Pole Telemetry Dashboard</title>
+
+  <link rel="stylesheet" href="css/design-system.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+
+<body>
+  <div class="app-layout">
+
+    <!-- ═══ SIDEBAR ═══ -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-brand">
+        <div class="logo">⚡</div>
+        <div class="brand-text">
+          <h3>TN-GridSense</h3>
+          <span>Smart Grid Platform</span>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-section-title">Monitoring</div>
+
+        <div class="nav-item active" data-view="state" onclick="app.navigate('state')">
+          <span class="nav-icon">🗺️</span>
+          <span>State Overview</span>
+        </div>
+
+        <div class="nav-item" data-view="district" onclick="app.navigate('district')">
+          <span class="nav-icon">🏢</span>
+          <span>District View</span>
+        </div>
+
+        <div class="nav-item" data-view="pole" onclick="app.navigate('pole')">
+          <span class="nav-icon">📡</span>
+          <span>Pole Inspector</span>
+        </div>
+
+        <div class="nav-section-title">Analytics</div>
+
+        <div class="nav-item" data-view="events" onclick="app.navigate('events')">
+          <span class="nav-icon">⚠️</span>
+          <span>Fault Events</span>
+          <span class="nav-badge" id="faultBadge">0</span>
+        </div>
+
+        <div class="nav-item" data-view="maintenance" onclick="app.navigate('maintenance')">
+          <span class="nav-icon">🔧</span>
+          <span>Maintenance</span>
+        </div>
+
+        <div class="nav-item" data-view="atcloss" onclick="app.navigate('atcloss')">
+          <span class="nav-icon">📊</span>
+          <span>AT&C Loss</span>
+        </div>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="connection-status">
+          <span class="dot" id="wsStatusDot"></span>
+          <span id="wsStatusText">Connecting...</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ═══ MAIN CONTENT ═══ -->
+    <main class="main-content">
+
+      <!-- Top Bar -->
+      <div class="top-bar">
+        <div>
+          <h1 class="page-title" id="pageTitle">State Overview</h1>
+          <div class="breadcrumbs" id="breadcrumbs">
+            <span onclick="app.navigate('state')">India</span> › <span onclick="app.navigate('state')">Tamil Nadu</span>
+          </div>
+        </div>
+        <div class="top-bar-actions">
+          <div class="state-selector">
+            <select id="stateSelect" onchange="app.handleStateChange(this.value)"
+              style="background: var(--bg-tertiary); color: var(--text-bright); border: 1px solid var(--border-default); padding: 0.35rem 0.75rem; border-radius: var(--radius-sm); font-size: 0.8rem; font-family: var(--font-primary); cursor: pointer; outline: none;">
+              <optgroup label="Active">
+                <option value="TN" selected>🟢 Tamil Nadu (38 Districts)</option>
+              </optgroup>
+              <optgroup label="Coming Soon">
+                <option value="KA" disabled>🔒 Karnataka</option>
+                <option value="KL" disabled>🔒 Kerala</option>
+                <option value="AP" disabled>🔒 Andhra Pradesh</option>
+                <option value="TS" disabled>🔒 Telangana</option>
+                <option value="MH" disabled>🔒 Maharashtra</option>
+                <option value="GJ" disabled>🔒 Gujarat</option>
+                <option value="RJ" disabled>🔒 Rajasthan</option>
+                <option value="UP" disabled>🔒 Uttar Pradesh</option>
+                <option value="MP" disabled>🔒 Madhya Pradesh</option>
+                <option value="WB" disabled>🔒 West Bengal</option>
+                <option value="BR" disabled>🔒 Bihar</option>
+                <option value="OR" disabled>🔒 Odisha</option>
+                <option value="PB" disabled>🔒 Punjab</option>
+                <option value="HR" disabled>🔒 Haryana</option>
+              </optgroup>
+            </select>
+          </div>
+          <div class="live-indicator">
+            <span class="live-dot"></span>
+            <span>LIVE</span>
+          </div>
+          <div style="font-size: 0.75rem; color: var(--text-muted); font-family: var(--font-mono);" id="lastUpdateTime">
+            --:--:--</div>
+        </div>
+      </div>
+
+      <!-- ═══ STATE VIEW ═══ -->
+      <div class="view-panel active" id="stateView">
+        <!-- KPI Cards -->
+        <div class="kpi-grid" id="kpiGrid">
+          <div class="card kpi-card animate-in" style="animation-delay: 0.05s">
+            <div class="kpi-icon" style="background: var(--accent-blue-dim); color: var(--accent-blue);">📡</div>
+            <div class="kpi-value" id="kpiTotalPoles">--</div>
+            <div class="kpi-label">Total Poles</div>
+          </div>
+          <div class="card kpi-card animate-in" style="animation-delay: 0.1s">
+            <div class="kpi-icon" style="background: var(--accent-green-dim); color: var(--accent-green);">✓</div>
+            <div class="kpi-value" id="kpiActivePoles">--</div>
+            <div class="kpi-label">Active Poles</div>
+          </div>
+          <div class="card kpi-card animate-in" style="animation-delay: 0.15s">
+            <div class="kpi-icon" style="background: var(--accent-red-dim); color: var(--accent-red);">⚡</div>
+            <div class="kpi-value" id="kpiFaults">--</div>
+            <div class="kpi-label">Active Faults</div>
+          </div>
+          <div class="card kpi-card animate-in" style="animation-delay: 0.2s">
+            <div class="kpi-icon" style="background: var(--accent-amber-dim); color: var(--accent-amber);">🌡️</div>
+            <div class="kpi-value" id="kpiOverheats">--</div>
+            <div class="kpi-label">Overheat Alerts</div>
+          </div>
+          <div class="card kpi-card animate-in" style="animation-delay: 0.25s">
+            <div class="kpi-icon" style="background: var(--accent-cyan-dim); color: var(--accent-cyan);">⚡</div>
+            <div class="kpi-value" id="kpiLoad">--</div>
+            <div class="kpi-label">Total Load (kW)</div>
+          </div>
+        </div>
+
+        <!-- Map + Event Feed -->
+        <div class="dashboard-grid">
+          <div class="card map-container animate-in" style="animation-delay: 0.3s">
+            <div class="card-header">
+              <span class="card-title">Tamil Nadu — 38 District Health Map</span>
+              <div style="display: flex; gap: var(--space-sm); align-items: center;">
+                <span class="zone-badge" data-zone="all" onclick="app.filterZone('all')"
+                  style="background: var(--bg-tertiary); color: var(--text-bright); border: 1px solid var(--border-active); padding: 2px 8px; border-radius: 10px; font-size: 0.65rem; cursor: pointer; font-weight: 600;">ALL</span>
+                <span class="zone-badge" data-zone="NORTH" onclick="app.filterZone('NORTH')"
+                  style="background: rgba(79,140,255,0.1); color: var(--accent-blue); border: 1px solid transparent; padding: 2px 8px; border-radius: 10px; font-size: 0.65rem; cursor: pointer;">NORTH</span>
+                <span class="zone-badge" data-zone="EAST" onclick="app.filterZone('EAST')"
+                  style="background: rgba(38,198,218,0.1); color: var(--accent-cyan); border: 1px solid transparent; padding: 2px 8px; border-radius: 10px; font-size: 0.65rem; cursor: pointer;">EAST</span>
+                <span class="zone-badge" data-zone="WEST" onclick="app.filterZone('WEST')"
+                  style="background: rgba(179,136,255,0.1); color: var(--accent-purple); border: 1px solid transparent; padding: 2px 8px; border-radius: 10px; font-size: 0.65rem; cursor: pointer;">WEST</span>
+                <span class="zone-badge" data-zone="SOUTH" onclick="app.filterZone('SOUTH')"
+                  style="background: rgba(255,183,77,0.1); color: var(--accent-amber); border: 1px solid transparent; padding: 2px 8px; border-radius: 10px; font-size: 0.65rem; cursor: pointer;">SOUTH</span>
+                <span class="badge normal" id="stateHealthBadge">Healthy</span>
+              </div>
+            </div>
+            <div id="tnMapContainer"></div>
+          </div>
+
+          <div class="card animate-in" style="animation-delay: 0.35s">
+            <div class="card-header">
+              <span class="card-title">Live Fault Feed</span>
+              <span style="font-size: 0.7rem; color: var(--text-muted);" id="eventCount">0 events</span>
+            </div>
+            <div class="event-feed" id="eventFeed">
+              <div class="empty-state">
+                <div class="empty-icon">📡</div>
+                <div>Waiting for data...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- District Table -->
+        <div class="card animate-in" style="animation-delay: 0.4s">
+          <div class="card-header">
+            <span class="card-title">District Health Rankings</span>
+          </div>
+          <div class="table-wrapper">
+            <table class="district-health-table">
+              <thead>
+                <tr>
+                  <th>District</th>
+                  <th>Poles</th>
+                  <th>Active</th>
+                  <th>Faults</th>
+                  <th>Avg Health</th>
+                  <th>Load (kW)</th>
+                  <th>Avg Voltage</th>
+                  <th>Risk</th>
+                </tr>
+              </thead>
+              <tbody id="districtTableBody">
+                <tr>
+                  <td colspan="8" class="text-muted" style="text-align: center; padding: 30px;">Loading...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ DISTRICT VIEW ═══ -->
+      <div class="view-panel" id="districtView">
+        <div id="districtContent">
+          <div class="empty-state">
+            <div class="empty-icon">🏢</div>
+            <div>Select a district from the map or table</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ POLE VIEW ═══ -->
+      <div class="view-panel" id="poleView">
+        <div id="poleContent">
+          <div class="empty-state">
+            <div class="empty-icon">📡</div>
+            <div>Select a pole to inspect</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ EVENTS VIEW ═══ -->
+      <div class="view-panel" id="eventsView">
+        <div id="eventsContent">
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">All Fault Events</span>
+            </div>
+            <div class="table-wrapper">
+              <table>
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Time</th>
+                    <th>Pole</th>
+                    <th>District</th>
+                    <th>Type</th>
+                    <th>Severity</th>
+                    <th>Value</th>
+                    <th>Message</th>
+                  </tr>
+                </thead>
+                <tbody id="eventsTableBody">
+                  <tr>
+                    <td colspan="8" class="text-muted" style="text-align: center; padding: 30px;">Loading events...</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ MAINTENANCE VIEW ═══ -->
+      <div class="view-panel" id="maintenanceView">
+        <div id="maintenanceContent">
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">Predictive Maintenance Recommendations</span>
+            </div>
+            <div id="maintenanceList" style="display: flex; flex-direction: column; gap: var(--space-md);">
+              <div class="empty-state">
+                <div class="empty-icon">🔧</div>
+                <div>Loading maintenance data...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ AT&C LOSS VIEW ═══ -->
+      <div class="view-panel" id="atclossView">
+        <div id="atclossContent">
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">AT&C Loss Analysis by Feeder</span>
+            </div>
+            <div class="table-wrapper">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Feeder</th>
+                    <th>Input Power (kW)</th>
+                    <th>Measured Load (kW)</th>
+                    <th>Loss (kW)</th>
+                    <th>Loss %</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="atclossTableBody">
+                  <tr>
+                    <td colspan="6" class="text-muted" style="text-align: center; padding: 30px;">Loading...</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <script src="js/charts.js"></script>
+  <script src="js/state-view.js"></script>
+  <script src="js/district-view.js"></script>
+  <script src="js/pole-view.js"></script>
+  <script src="js/app.js"></script>
+</body>
+
+</html>

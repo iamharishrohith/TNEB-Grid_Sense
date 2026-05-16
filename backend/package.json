@@ -1,0 +1,18 @@
+{
+  "name": "tn-gridsense-backend",
+  "version": "1.0.0",
+  "description": "TN-GridSense: Distributed Smart Pole Telemetry & Predictive Fault Management System - Backend",
+  "scripts": {
+    "dev": "bun run --watch src/index.ts",
+    "start": "bun run src/index.ts",
+    "simulate": "bun run src/simulator.ts"
+  },
+  "dependencies": {
+    "elysia": "^1.2.0",
+    "@elysiajs/cors": "^1.2.0",
+    "@elysiajs/static": "^1.2.0"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  }
+}
