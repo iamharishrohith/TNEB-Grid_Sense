@@ -16,29 +16,80 @@
 
 ---
 
-## 🏗️ Architecture
+## ⚠️ The Core Problem
+
+Tamil Nadu's distribution grid faces massive structural stress:
+- **Evening Peak Deficit**: Up to 5,000 MW shortfall during 6–10 PM peak hours.
+- **AT&C Losses**: Aggregate Technical & Commercial losses due to theft and inefficiency.
+- **Delayed Maintenance**: Faults are detected *after* outages occur.
+- **Renewable Variability**: Complex integration of solar and wind energy.
+
+> **The Fundamental Gap:** The grid lacks **granular, real-time, pole-level visibility**. Utilities monitor at the feeder level and do not know micro-level stress conditions until a failure occurs. Failures are reactive. Losses are invisible until audited.
+
+---
+
+## 💡 The Vision
+
+Deploy intelligent edge monitoring nodes on every distribution pole across Tamil Nadu. Instead of waiting for failures, the system detects and predicts them.
+
+| Node Function | Capability |
+|---------------|------------|
+| **Real-time Sensor** | Voltage, current, temperature monitoring |
+| **Protection Unit** | Automatic relay trip on fault (Over/Undervoltage, Overload) |
+| **Telemetry Device** | Continuous 5-second interval data transmission |
+| **Predictive AI** | Health scoring and transformer failure prediction |
+
+---
+
+## 🏗️ System Architecture
 
 ```mermaid
 graph TD
-    subgraph Edge Layer [EDGE LAYER: Smart Pole]
-        A[ESP32 + ADS1115 + ACS712]
+    subgraph Edge Layer [EDGE LAYER: Smart Pole Node]
+        A[ESP32 + ADS1115 + ACS712 + INA219 + MAX6675]
         A -->|Reads V, I, Temp| B[Fault Detection & Relays]
-        B -->|Telemetry| C[LoRa / WiFi]
+        B -->|Telemetry| C[LoRa SX1278 / WiFi]
     end
 
     subgraph Backend [BACKEND: Bun + Elysia]
         C -->|HTTP POST / LoRa| D[Ingestion API]
-        D --> E[(In-Memory Time-Series)]
+        D --> E[(In-Memory Time-Series Store)]
         E --> F[Anomaly Engine & Predictive Maintenance]
-        E --> G[WebSocket Broadcast]
+        E --> G[WebSocket Real-Time Broadcast]
+        F --> H[AT&C Loss Estimator]
     end
 
     subgraph Dashboard [DASHBOARD: HTML + JS + Chart.js]
-        G -->|Real-time WS| H[State Overview Level 1]
-        H --> I[District Drill-down Level 2]
-        I --> J[Pole Inspector Level 3]
+        G -->|State Overview Level 1| I[Tamil Nadu Map + KPIs]
+        I -->|District Drill-down Level 2| J[Feeders + Poles List]
+        J -->|Pole Inspector Level 3| K[Live Metrics & Charts]
     end
 ```
+
+### 1. Edge Layer (Smart Pole)
+Every 5 seconds, each pole transmits a secure, NTP-synced telemetry packet containing: `Voltage`, `Current`, `Temperature`, `Power`, `Health Score`, `Relay State`, `Status` (NORMAL / OVERVOLTAGE / OVERLOAD), and `Signal Strength`.
+
+### 2. Communication Layer
+- **Urban**: Direct WiFi / 4G connection from pole to cloud.
+- **Rural**: LoRa (433 MHz) from pole to regional aggregators, then to cloud.
+
+### 3. Backend Layer
+Built on **Bun + Elysia** for extreme low-latency processing. Handles concurrent data ingestion, powers the anomaly and health-scoring engines, calculates AT&C loss deviations, and pushes real-time WebSocket updates.
+
+### 4. Dashboard Layer
+A 3-tier reactive UI providing a State Overview (Level 1), District Drill-down (Level 2), and individual Pole Inspector (Level 3).
+
+---
+
+## ⚡ 7 Key Functional Capabilities
+
+1. **Real-Time Grid Visibility**: Pole-level voltage and current data across the state.
+2. **Intelligent Fault Detection**: Auto-detects Overvoltage (>253V), Undervoltage (<207V), Overload (>25A), and Overheating (>80°C).
+3. **Predictive Maintenance**: Computes a Transformer Health Score based on temperature trends and stability to predict days-to-failure.
+4. **AT&C Loss Reduction**: Detects theft clusters by analyzing deviations between *Feeder Input Power* vs. *Sum of Pole-Level Loads*.
+5. **Renewable Integration**: District-level load data enables pre-activation of backup generation before evening peaks.
+6. **Maintenance Optimization**: Field staff get precise pole locations and fault types immediately, reducing downtime from hours to minutes.
+7. **Data Integrity**: Edge-nodes support local buffering (100 packets) during outages and over-the-air (OTA) updates.
 
 ---
 
@@ -67,7 +118,7 @@ bun run dev
 cd backend
 bun run simulate
 ```
-> 📊 *This generates telemetry for ~50 poles across 5 districts.*
+> 📊 *This generates simulated telemetry for ~50 poles across 5 Tamil Nadu districts.*
 
 ### 4️⃣ View Dashboard
 Open `http://localhost:3000` in your browser.
@@ -113,21 +164,30 @@ Open `http://localhost:3000` in your browser.
   - `pole-view.js`: Level 3 — Pole inspector
 </details>
 
+<details>
+<summary><b>docs/ (Project Documentation)</b></summary>
+<br>
+
+- `ARCHITECTURE.md`: Deep technical diagrams
+- `PROPOSAL.md`: Business and technical proposal
+- `WEB_SERIAL_PROTOTYPE.md`: Edge-to-dashboard hardware test guide
+</details>
+
 ---
 
-## 🔌 Hardware (Per Pole)
+## 🔌 Hardware Bill of Materials (Per Pole)
 
 | Component | Purpose |
 |-----------|---------|
-| **ESP32 Dev Board** | Main controller |
+| **ESP32 Dev Board** | Main microcontroller |
 | **ADS1115 16-bit ADC** | High-precision analog measurement |
 | **AC Voltage Divider** | Mains voltage sensing (230V) |
 | **ACS712 (30A)** | AC line current sensing |
 | **INA219** | DC bus monitoring |
-| **MAX6675 + K-type probe** | Transformer temperature |
-| **LoRa SX1278 (433MHz)** | Long-range wireless |
-| **OLED 0.96" I2C** | Local display |
-| **5V Relay Module** | Fault protection |
+| **MAX6675 + K-type probe** | Transformer temperature monitoring |
+| **LoRa SX1278 (433MHz)** | Long-range wireless communication |
+| **OLED 0.96" I2C** | Local debugging display |
+| **5V Relay Module** | Auto-trip fault protection |
 
 ---
 
@@ -135,19 +195,26 @@ Open `http://localhost:3000` in your browser.
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| <kbd>POST</kbd> | `/api/telemetry` | Ingest telemetry packet |
-| <kbd>GET</kbd> | `/api/stats` | System-wide statistics |
-| <kbd>GET</kbd> | `/api/poles` | All poles list |
-| <kbd>GET</kbd> | `/api/poles/:id` | Single pole + analytics |
-| <kbd>GET</kbd> | `/api/districts` | All district summaries |
-| <kbd>GET</kbd> | `/api/districts/:id` | Single district |
+| <kbd>POST</kbd> | `/api/telemetry` | Ingest edge-node telemetry packet |
+| <kbd>GET</kbd> | `/api/stats` | System-wide aggregates & KPIs |
+| <kbd>GET</kbd> | `/api/poles` | Get list of all poles |
+| <kbd>GET</kbd> | `/api/poles/:id` | Get single pole live metrics + analytics |
+| <kbd>GET</kbd> | `/api/districts` | All district health summaries |
 | <kbd>GET</kbd> | `/api/feeders` | All feeder summaries |
-| <kbd>GET</kbd> | `/api/events` | Recent fault events |
-| <kbd>GET</kbd> | `/api/analytics/maintenance` | Predictive maintenance |
+| <kbd>GET</kbd> | `/api/events` | Recent anomaly & fault events |
+| <kbd>GET</kbd> | `/api/analytics/maintenance` | Predictive maintenance queue |
 | <kbd>GET</kbd> | `/api/analytics/atc-loss` | AT&C loss per feeder |
-| <kbd>WS</kbd> | `/ws` | Real-time WebSocket updates |
+| <kbd>WS</kbd> | `/ws` | Real-time WebSocket multiplexing |
 
 ---
+
+## 📈 Economic & State Impact
+
+- **ROI**: Even a **1% reduction in AT&C losses** across Tamil Nadu saves **hundreds of crores annually**.
+- **Asset Protection**: Drastically reduces transformer replacements (₹3–8 lakhs per unit) through predictive thermal management.
+- **Future-Proofing**: Acts as the foundational data layer for smart city integration, demand response systems, and a state-level energy intelligence network.
+
+<br>
 
 <div align="center">
   <p>Licensed under <b>MIT</b></p>
